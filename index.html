@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Substitution Cipher</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+            rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .poppins-regular {
+                font-family: "Poppins", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }
+        </style>
+    </head>
+    <body
+        class="flex items-center justify-center min-h-screen bg-[#212121] poppins-regular p-4">
+        <div
+            class="bg-[#2B2B2B] p-6 rounded-lg shadow-lg max-w-lg w-full text-center">
+            <h1 class="text-2xl font-medium text-zinc-50">
+                Substitution Cipher
+            </h1>
+            <h2 class="text-base font-medium mb-4 text-zinc-500">
+                (Jiysea Method)
+            </h2>
+
+            <span class="flex items-center justify-center gap-4 mb-4">
+                <input
+                    type="text"
+                    id="encryptInput"
+                    placeholder="Type message"
+                    autocomplete="off"
+                    autocapitalize="on"
+                    class="text-sm rounded-md w-full p-2 outline-none bg-[#383838] placeholder-zinc-500 text-zinc-50 focus:ring-2 focus:ring-zinc-500 duration-200 ease-in-out caret-zinc-500 selection:bg-zinc-300 selection:text-zinc-700" />
+
+                <button
+                    onclick="encrypt()"
+                    class="text-sm duration-200 ease-in-out bg-zinc-700 hover:bg-indigo-800 active:bg-indigo-900 text-white rounded-md px-4 py-2 font-medium outline-none">
+                    Encrypt
+                </button>
+            </span>
+
+            <span class="flex items-center justify-center gap-4 mb-4">
+                <input
+                    type="text"
+                    id="decryptInput"
+                    placeholder="Type cipher"
+                    autocomplete="off"
+                    autocapitalize="on"
+                    class="text-sm rounded-md w-full p-2 outline-none bg-[#383838] placeholder-zinc-500 text-zinc-50 focus:ring-2 focus:ring-zinc-500 duration-200 ease-in-out caret-zinc-500 selection:bg-zinc-300 selection:text-zinc-700" />
+
+                <button
+                    onclick="decrypt()"
+                    class="text-sm duration-200 ease-in-out bg-zinc-700 hover:bg-indigo-800 active:bg-indigo-900 text-white rounded-md px-4 py-2 font-medium outline-none">
+                    Decrypt
+                </button>
+            </span>
+
+            <div
+                id="output"
+                class="flex whitespace-nowrap text-zinc-50 mt-4 text-gray-700 text-lg font-medium"></div>
+        </div>
+
+        <script>
+            const sub =
+                "tRH2xBKz6myocv7ha0X4bn8SOrFPJTICd9qVegfNULlDYspk5QZAWji.wE1uGM3";
+            const characters =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.";
+
+            function encrypt() {
+                const input = document.getElementById("encryptInput").value;
+
+                let substitutedText = "";
+
+                for (let i = 0; i < input.length; i++) {
+                    const index = characters.indexOf(input[i]);
+                    if (index !== -1) {
+                        substitutedText += sub[index];
+                    } else {
+                        substitutedText += input[i]; // Keep the character if not found
+                    }
+                }
+
+                document.getElementById("output").innerText = substitutedText
+                    ? `Encrypted: ${substitutedText}`
+                    : "Please enter something!";
+            }
+
+            function decrypt() {
+                const input = document.getElementById("decryptInput").value;
+                let originalText = "";
+
+                for (let i = 0; i < input.length; i++) {
+                    const index = sub.indexOf(input[i]);
+                    if (index !== -1) {
+                        originalText += characters[index];
+                    } else {
+                        originalText += input[i]; // Keep the character if not found
+                    }
+                }
+
+                document.getElementById("output").innerText = originalText
+                    ? `Decrypted: ${originalText}`
+                    : "Please enter something!";
+            }
+        </script>
+    </body>
+</html>
